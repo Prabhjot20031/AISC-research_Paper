@@ -1,0 +1,36 @@
+import numpy as np # Import the NumPy library as np
+from sklearn.linear_model import LinearRegression # Import LinearRegression from scikitlearn
+import matplotlib.pyplot as plt # Import the pyplot module from Matplotlib
+import math # Import the math module (not used in this code)
+# Generate a sample dataset
+np.random.seed(0) # Set the random seed for reproducibility
+num_points = 50 # Define the number of data points
+time_steps = np.arange(num_points) # Create an array of time steps
+x = np.linspace(0, 100, num_points) + np.random.normal(0, 5, num_points) # Generate xcoordinates with noise
+y = 2 * x + 10 + np.random.normal(0, 20, num_points) # Generate y-coordinates with noise
+# Create a linear regression model
+model = LinearRegression() # Instantiate a LinearRegression model
+# Prepare the data for training
+X = time_steps.reshape(-1, 1) # Reshape the time_steps array for training
+y = y # Assign the y-coordinates as the target variable
+# Fit the model to the data
+model.fit(X, y) # Train the linear regression model on the data
+# Predict future positions
+future_time_steps = np.arange(num_points, num_points + 10) # Define the time steps for 
+future predictions
+future_X = future_time_steps.reshape(-1, 1) # Reshape the future time steps for predictions
+future_y = model.predict(future_X) # Use the trained model to predict future y-coordinates
+# Plot the results
+plt.scatter(time_steps, y, label='Observed Data') # Create a scatter plot for the observed 
+data
+plt.plot(future_time_steps, future_y, 'r--', label='Predicted Trajectory') # Plot the predicted 
+trajectory
+plt.xlabel('Time Steps') # Set the x-axis label
+plt.ylabel('Position (y)') # Set the y-axis label
+plt.legend() # Add a legend to the plot
+plt.show() # Display the plot
+# Print the predicted future positions
+print("Predicted future positions:") # Print a header for the predicted positions
+for i, time_step in enumerate(future_time_steps): # Iterate over future time steps
+ print(f"Time Step {time_step}: Predicted Position {future_y[i]}") # Print each predicted 
+position with its time step
